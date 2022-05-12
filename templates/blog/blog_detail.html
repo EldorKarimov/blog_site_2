@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} blog detail {% endblock %}
+
+{% block content %}
+<section>
+    <section style="width:800px; box-shadow: 5px 5px 5px 5px #666; margin-top:55px">
+        <h1>{{blog.title}}</h1>
+        <img style="width:800px; height:600px" src="{{ blog.image.url }}">
+        <p>{{ blog.description }}</p><hr>
+        <p>Date: {{ blog.created }}</p><hr>
+        <p>author: {{ blog.user }}</p><hr>
+        {% for t in blog.tags.all %}
+            <a href="{% url 'tag_blog' t.slug %}" style="text-decoration:none">#{{ t.name }}</a>
+        {% endfor %}
+    </section>
+    <div class="row">
+        <div class="col-lg-6">
+            {% for comment in blog.comment.all %}
+                <p>{{ comment.text }}</p>
+                <span>{{ comment.rating }}</span>
+                <form action="{% url 'comment_delete' comment.pk%}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">delete</button>
+                </form>
+            {% endfor %}
+        </div>
+        <div class="col-lg-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+    <a href="{% url 'blog_delete' blog.slug %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'blog_update' blog.slug %}" class="btn btn-danger">Update</a>
+
+</section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} tag bo'yicha bloglar {% endblock %}
+
+{% block content %}
+<section>
+    {% for blog in blogs %}
+    <section style="width:800px; box-shadow: 5px 5px 5px 5px #666; margin-top:55px">
+        <h1>{{blog.title}}</h1>
+        <img style="width:800px; height:600px" src="{{ blog.image.url }}">
+        <p>{{ blog.description | slice:":90" }}...<a href="#">learn more</a></p><hr>
+        <p>Date: {{ blog.created }}</p><hr>
+        <p>author: {{ blog.user }}</p><hr>
+        {% for t in blog.tags.all %}
+            <a href="{% url 'tag_blog' t.slug %}" style="text-decoration:none">#{{ t.name }}</a>
+        {% endfor %}
+    </section>
+    {% endfor %}
+</section>
+{% endblock %}

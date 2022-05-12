@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} blog creating {% endblock %}
+
+{% block content %}
+<section>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input name='xx' value="{{tags_value}}">
+        <button type="submit">Save</button>
+    </form>
+</section>
+{% endblock %}

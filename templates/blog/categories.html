@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %} categories {% endblock %}
+
+{% block content %}
+<section>
+    {% for category in categories %}
+    <section style="box-shadow: 5px 5px 5px 5px #777; margin-top: 40px; width: 70%">
+        <h3>{{ category.name }}</h3>
+        <img style="width:100px" src="{{ category.image.url}}">
+        <p>{{ category.description |slice:":100" }}...<a href="{% url 'category' category.slug %}">learn more</a></p>
+        <p>user count: {{ category.user.count }}</p>
+        {% if request.user in category.user.all %}
+        <a href="{% url 'category_add_user' category.slug %}" class="btn btn-danger">Tark etish</a>
+        {% else %}
+        <a href="{% url 'category_add_user' category.slug %}" class="btn btn-primary">A'zo bo'lish</a>
+        {% endif %}
+    </section>
+
+    {% endfor %}
+</section>
+{% endblock %}
